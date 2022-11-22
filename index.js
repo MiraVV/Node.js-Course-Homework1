@@ -1,7 +1,9 @@
-const yargs = require("yargs/yargs");
-const { hideBin } = require("yargs/helpers");
-const arr = hideBin(process.argv);
-const { argv } = yargs(arr);
+// const yargs = require("yargs/yargs");
+// const { hideBin } = require("yargs/helpers");
+// const arr = hideBin(process.argv);
+// const { argv } = yargs(arr);
+
+const { program } = require("commander");
 
 const contactsOperations = require("./db/contacts");
 
@@ -39,6 +41,18 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
   }
 };
 
+// invokeAction(argv);
 // id = "2";
-invokeAction(argv);
 // invokeAction({ action: "get", id: id });
+
+program
+  .option("-a, --action <type>", "contacts operation")
+  .option("-i, --id <type>", "contact id")
+  .option("-n, --name <type>", "contact name")
+  .option("-e, --email <type>", "contact email")
+  .option("-p, --phone <type>", "contact phone");
+
+program.parse(process.argv);
+
+const options = program.opts();
+invokeAction(options);

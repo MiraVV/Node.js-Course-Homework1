@@ -12,21 +12,21 @@ const listContacts = async () => {
   return contacts;
 };
 
-const getContactById = async (id) => {
+const getContactById = async (contactId) => {
   const allContacts = await listContacts();
-  const contact = allContacts.find((item) => item.id === id);
+  const contact = allContacts.find((contact) => contact.id === contactId);
   return contact ? contact : null;
 };
 
-const removeContact = async (id) => {
-  const contacts = await listContacts();
-  const idx = contacts.findIndex((item) => item.id === id);
+const removeContact = async (contactId) => {
+  const allContacts = await listContacts();
+  const idx = allContacts.findIndex((contact) => contact.id === contactId);
   if (idx === -1) {
     return null;
   }
-  const newContacts = contacts.filter((_, index) => index !== idx);
+  const newContacts = allContacts.filter((_, index) => index !== idx);
   await updateContacts(newContacts);
-  return contacts[idx];
+  return allContacts[idx];
 };
 
 const addContact = async (name, email, phone) => {
